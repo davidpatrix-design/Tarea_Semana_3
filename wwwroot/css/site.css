@@ -1,0 +1,55 @@
+html {
+  font-size: 15px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  background-color: #f3f6fb;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+}
+
+.card-header {
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+}
+
+.pie {
+  margin-top: auto;
+  border-top: 1px solid #dde3ec;
+  background-color: #ffffff;
+}
+
+.btn:focus-visible,
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.35);
+}
+
+.barra {
+  background-color: #0b4fa8;
+}
+
+.barra .nav-link {
+  color: #ffffff;
+}
+
+.barra .nav-link:hover {
+  color: #d6e4ff;
+}

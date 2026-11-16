@@ -1,0 +1,47 @@
+@model Cliente
+@{
+    ViewData["Title"] = "Datos del cliente";
+
+    int edad = 0;
+    if (Model.FechaNacimiento != null)
+    {
+        edad = DateTime.Today.Year - Model.FechaNacimiento.Value.Year;
+        if (Model.FechaNacimiento.Value.Date > DateTime.Today.AddYears(-edad))
+        {
+            edad--;
+        }
+    }
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card shadow-sm">
+            <div class="card-header bg-info-subtle">
+                <h4 class="mb-0">@Model.Nombres @Model.Apellidos</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p><strong>Cédula:</strong> @Model.Cedula</p>
+                        <p><strong>Correo:</strong> @Model.Email</p>
+                        <p><strong>Celular:</strong> @Model.Celular</p>
+                        <p><strong>Sexo:</strong> @Model.Sexo</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p><strong>Fecha de nacimiento:</strong> @Model.FechaNacimiento?.ToString("dd/MM/yyyy")</p>
+                        <p><strong>Edad:</strong> @edad años</p>
+                        <p><strong>Ciudad:</strong> @Model.Ciudad</p>
+                        <p><strong>Cupo de crédito:</strong> $@Model.CupoCredito</p>
+                    </div>
+                    <div class="col-12">
+                        <p class="mb-0"><strong>Dirección:</strong> @Model.Direccion</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex gap-2">
+                <a href="/Cliente/Editar/@Model.IdCliente" class="btn btn-primary">Editar</a>
+                <a href="/Cliente" class="btn btn-outline-secondary">Volver a la lista</a>
+            </div>
+        </div>
+    </div>
+</div>

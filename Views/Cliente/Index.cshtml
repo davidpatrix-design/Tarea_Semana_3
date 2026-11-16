@@ -1,0 +1,80 @@
+@model List<Cliente>
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <h2 class="mb-0">Lista de clientes</h2>
+    @Html.ActionLink("+ Agregar cliente", "Nuevo", "Cliente", null, new { @class = "btn btn-primary" })
+</div>
+
+@if (TempData["exito"] != null)
+{
+    <div class="alert alert-info alert-dismissible fade show" role="status">
+        @TempData["exito"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
+<form method="get" action="/Cliente" class="row g-2 mb-3">
+    <div class="col-sm-8 col-md-6">
+        <input type="search" name="buscar" value="@ViewBag.Buscar" class="form-control" placeholder="Buscar por nombre, apellido o cédula" aria-label="Buscar cliente" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-primary">Buscar</button>
+        <a href="/Cliente" class="btn btn-outline-secondary">Limpiar</a>
+    </div>
+</form>
+
+<div class="card shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-primary">
+                <tr>
+                    <th>#</th>
+                    <th>Cédula</th>
+                    <th>Cliente</th>
+                    <th class="d-none d-lg-table-cell">Correo</th>
+                    <th>Celular</th>
+                    <th>Ciudad</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count == 0)
+                {
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">No se encontraron clientes</td>
+                    </tr>
+                }
+
+                @{
+                    int numero = 1;
+                }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@numero</td>
+                        <td>@item.Cedula</td>
+                        <td>@item.Nombres @item.Apellidos</td>
+                        <td class="d-none d-lg-table-cell">@item.Email</td>
+                        <td>@item.Celular</td>
+                        <td>@item.Ciudad</td>
+                        <td class="text-nowrap">
+                            <a href="/Cliente/Ver/@item.IdCliente" class="btn btn-sm btn-outline-secondary">Ver</a>
+                            <a href="/Cliente/Editar/@item.IdCliente" class="btn btn-sm btn-outline-primary">Editar</a>
+                            @using (Html.BeginForm("Eliminar", "Cliente", new { id = item.IdCliente }, FormMethod.Post, true, new { @class = "d-inline", onsubmit = "return confirm('¿Seguro que desea eliminar a este cliente?');" }))
+                            {
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                            }
+                        </td>
+                    </tr>
+                    numero++;
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer text-muted">
+        Total: @Model.Count cliente(s)
+    </div>
+</div>
